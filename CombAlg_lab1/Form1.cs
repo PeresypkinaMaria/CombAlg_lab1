@@ -17,20 +17,15 @@ namespace CombAlg_lab1
 
         public MainForm()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         //считывание чисел
         void GetNum()
         {
-            string input_str = tbInputNum.Text;
-            input_str = input_str.Replace("  ", " ");
-            string[] strNum = input_str.Split(' ');
-
-            if (strNum.Length == 0)
-                MessageBox.Show("Введите числа!");
-            else
-            {
+                string input_str = tbInputNum.Text;
+                input_str = input_str.Replace("  ", " ");
+                string[] strNum = input_str.Split(' ');
                 NumArr = new int[strNum.Length];
                 int currNum;
                 for (int i = 0; i < strNum.Length; i++)
@@ -42,25 +37,42 @@ namespace CombAlg_lab1
                             NumArr[i] = currNum;
                     else
                         MessageBox.Show("Ошибка ввода чисел!");
-                }
-            }
+                }            
         }
 
         //считывание требуемого результата
         void GetNeedNum()
         {
             int n;
-            if (tbNeedNum.Text == "")
-                MessageBox.Show("Введите искомое число!");
-            else
-            {
                 if (Int32.TryParse(tbNeedNum.Text.Trim(), out n))
                     NeedNum = n;
                 else
-                    MessageBox.Show("Ошибка ввода искомого числа!");
+                    MessageBox.Show("Ошибка ввода искомого числа!");            
+        }
+
+        private void btnSearchSol_Click(object sender, EventArgs e)
+        {
+            if (tbInputNum.Text == "")
+                MessageBox.Show("Введите числа!");
+            else
+            {
+                GetNum();
+                if (tbNeedNum.Text == "")
+                    MessageBox.Show("Введите искомое число!");
+                else
+                {
+                    GetNeedNum();
+                    FindVariation find_var = new FindVariation(NeedNum, NumArr);
+                    tbSolution.Text = find_var.FindVar();
+                }
             }
         }
 
-
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            tbInputNum.Text = "";
+            tbNeedNum.Text = "";
+            tbSolution.Text = "";
+        }
     }
 }

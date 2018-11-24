@@ -78,12 +78,14 @@
             this.btnSearchSol.TabIndex = 4;
             this.btnSearchSol.Text = "Искать решение";
             this.btnSearchSol.UseVisualStyleBackColor = true;
+            this.btnSearchSol.Click += new System.EventHandler(this.btnSearchSol_Click);
             // 
             // tbSolution
             // 
             this.tbSolution.Location = new System.Drawing.Point(12, 187);
+            this.tbSolution.Multiline = true;
             this.tbSolution.Name = "tbSolution";
-            this.tbSolution.Size = new System.Drawing.Size(298, 22);
+            this.tbSolution.Size = new System.Drawing.Size(298, 203);
             this.tbSolution.TabIndex = 5;
             // 
             // lblSolution
@@ -97,12 +99,13 @@
             // 
             // btnClean
             // 
-            this.btnClean.Location = new System.Drawing.Point(113, 249);
+            this.btnClean.Location = new System.Drawing.Point(119, 407);
             this.btnClean.Name = "btnClean";
             this.btnClean.Size = new System.Drawing.Size(91, 31);
             this.btnClean.TabIndex = 7;
             this.btnClean.Text = "Очистить";
             this.btnClean.UseVisualStyleBackColor = true;
+            this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
             // 
             // MainForm
             // 

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace CombAlg_lab1
 {
     //проверка комбинаций
-    class FindVariation
+    public class FindVariation
     {
         char[] SignArr = { '+', '-', '*', ' ' };
         private int need_num;
         private int[] arr;
-        public char[,] table;
+        private char[,] table;
 
-        FindVariation(int nn, int[] ar)
+        public FindVariation(int nn, int[] ar)
         {
             need_num = nn;
             arr = ar;
@@ -29,6 +29,7 @@ namespace CombAlg_lab1
 
             for (int i = 0; i < var_len; i++) //перебор всех позиций в комбинации
             {
+                
                 int cnt = (int)Math.Pow(SignArr.Length, i); //количество комбинаций с заданной позиции
                 for (int p1 = 0; p1 < perm;) //проход по всем комбинациям
                 {
@@ -46,9 +47,48 @@ namespace CombAlg_lab1
         }
 
         //поиск вариантов комбинаций
-        string FindVar()
+        public string FindVar()
         {
+            Calculate calc = new Calculate();
+            GetVar();
+            string res_str = "";
+            string calc_str = arr[0].ToString(); //первая цифра комбинации
+            for (int k = 0; k < table.GetLength(0); k++)
+            {
+                for(int j = 0; j < table.GetLength(1);)
+                { 
+            /*for (int k = 0; k <= table.Length; k++)
+            {
+                for (int j = 0; j < ) */               
 
+                //собираем выражение в одну строку
+                for (int i = 1; i < arr.Length; i++) //цикл по числам, для которых нужно подобрать знаки
+                    {
+                        switch (table[i, j])
+                        {
+                            case '+':
+                                calc_str = calc_str + '+' + arr[i].ToString();
+                                break;
+                            case '-':
+                                calc_str = calc_str + '-' + arr[i].ToString();
+                                break;
+                            case '*':
+                                calc_str = calc_str + '*' + arr[i].ToString();
+                                break;
+                            case ' ':
+                                calc_str += arr[i].ToString();
+                                break;
+                        }
+                        j++;
+                    }
+                }
+                //вычисляем значение получившейся строки
+                string res = calc.CalculateVar(calc_str);
+                if (Char.IsDigit(res.ToCharArray()[0]))
+                    if (Int32.Parse(res) == need_num)
+                        res_str += calc_str + " = " + need_num + "\n";
+            }
+            return res_str;
         }
     }
 }

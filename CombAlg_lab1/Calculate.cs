@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CombAlg_lab1
 {
-    class Calculate
+    public class Calculate
     {
         bool is_operation(char c)
         {
@@ -41,7 +41,7 @@ namespace CombAlg_lab1
         }
 
         //вычисление комбинации
-        string CalculateVar(string str)
+        public string CalculateVar(string str)
         {
             Stack st_num = new Stack(); //стек с числами
             Stack st_op = new Stack(); //стек с операциями
@@ -50,8 +50,33 @@ namespace CombAlg_lab1
                 if (is_operation(s[i]))
                 {
                     char curr_op = s[i];
-                    while 
+                    while (st_op.Count != 0 && priority((char)st_op.Peek()) >= priority(s[i])) //пока стек не пуст и приоритет операции ниже
+                        if (!PerformOperation(st_num, (char)st_op.Pop())) //выполняем предыдущую операцию в стеке
+                            return "Ошибка!";
                 }
+                else //если не операция
+                {
+                    string num = "";
+                    int j = 0;
+                    while (i < s.Length && Char.IsDigit(s[i]))
+                    {
+                        num += s[i]; //добавляем цифру к числу
+                        j++;
+                        i++;
+                    }
+                    --i; //??
+                    st_num.Push(Int32.Parse(num));
+                }
+            while (st_op.Count != 0)
+            {
+                if (!PerformOperation(st_num, (char)st_op.Peek()))
+                    return "Ошибка!";
+                st_op.Pop();
+            }
+            if (st_num.Count != 0)
+                return st_num.Peek().ToString();
+            else
+                return "Ошибка!";
         }
     }
 }
