@@ -63,7 +63,11 @@ namespace CombAlg_lab1
                 {
                     GetNeedNum();
                     FindVariation find_var = new FindVariation(NeedNum, NumArr);
-                    tbSolution.Text = find_var.FindVar();
+                    string res = find_var.FindVar();
+                    if (res == "")
+                        tbSolution.Text = "Решений нет!";
+                    else
+                        tbSolution.Text = find_var.FindVar();
                 }
             }
         }

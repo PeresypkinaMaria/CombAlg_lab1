@@ -9,6 +9,8 @@ namespace CombAlg_lab1
 {
     public class Calculate
     {
+        int i;
+
         bool is_operation(char c)
         {
             return c == '+' || c == '-' || c == '*';
@@ -16,7 +18,9 @@ namespace CombAlg_lab1
 
         int priority(char c)
         {
-            return c == '+' || c == '-' ? 1 : 2;
+            return c == '+' || c == '-' ? 1 : 
+                c == '*' ? 2 :
+                -1;
         }
 
         //выполнение операции, true - успешно
@@ -46,13 +50,14 @@ namespace CombAlg_lab1
             Stack st_num = new Stack(); //стек с числами
             Stack st_op = new Stack(); //стек с операциями
             char[] s = str.ToCharArray();
-            for(int i = 0; i < s.Length; i++)
+            for(i = 0; i < s.Length; i++)
                 if (is_operation(s[i]))
                 {
-                    char curr_op = s[i];
+                    char curr_op = s[i]; //запоминаем операцию
                     while (st_op.Count != 0 && priority((char)st_op.Peek()) >= priority(s[i])) //пока стек не пуст и приоритет операции ниже
                         if (!PerformOperation(st_num, (char)st_op.Pop())) //выполняем предыдущую операцию в стеке
                             return "Ошибка!";
+                    st_op.Push(curr_op); //заносим в стек нашу операцию
                 }
                 else //если не операция
                 {
@@ -64,7 +69,7 @@ namespace CombAlg_lab1
                         j++;
                         i++;
                     }
-                    --i; //??
+                    --i;
                     st_num.Push(Int32.Parse(num));
                 }
             while (st_op.Count != 0)
